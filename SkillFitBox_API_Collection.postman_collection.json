@@ -1,0 +1,570 @@
+{
+	"info": {
+		"_postman_id": "12345678-1234-1234-1234-123456789012",
+		"name": "SkillFitBox API Collection",
+		"description": "Comprehensive collection for SkillFitBox fitness center management system API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "12345678"
+	},
+	"item": [
+		{
+			"name": "Client Management",
+			"item": [
+				{
+					"name": "Create Client",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"surname\": \"Иванов\",\n    \"name\": \"Иван\",\n    \"patronymic\": \"Иванович\",\n    \"birthday\": \"1990-05-15\",\n    \"phone\": \"+79123456789\",\n    \"email\": \"ivan.ivanov@example.com\",\n    \"isActive\": true\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/clients",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"clients"
+							]
+						},
+						"description": "Create a new client in the fitness center system"
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Clients",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/clients",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"clients"
+							]
+						},
+						"description": "Retrieve a list of all clients"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Client by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/clients/{{client_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"clients",
+								"{{client_id}}"
+							]
+						},
+						"description": "Get a specific client by their ID"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Client Details",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/clients/{{client_id}}/detail",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"clients",
+								"{{client_id}}",
+								"detail"
+							]
+						},
+						"description": "Get detailed client information including related data"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Client",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"surname\": \"Иванов\",\n    \"name\": \"Иван\",\n    \"patronymic\": \"Иванович\",\n    \"birthday\": \"1990-05-15\",\n    \"phone\": \"+79123456789\",\n    \"email\": \"ivan.ivanov.updated@example.com\",\n    \"isActive\": true\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/clients/{{client_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"clients",
+								"{{client_id}}"
+							]
+						},
+						"description": "Update existing client information"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Client Status",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/clients/{{client_id}}/status?isActive=false",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"clients",
+								"{{client_id}}",
+								"status"
+							],
+							"query": [
+								{
+									"key": "isActive",
+									"value": "false"
+								}
+							]
+						},
+						"description": "Update client status (activate/deactivate)"
+					},
+					"response": []
+				},
+				{
+					"name": "Assign Trainer to Client",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/clients/{{client_id}}/trainer/{{trainer_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"clients",
+								"{{client_id}}",
+								"trainer",
+								"{{trainer_id}}"
+							]
+						},
+						"description": "Assign a trainer to a client"
+					},
+					"response": []
+				},
+				{
+					"name": "Add Service to Client",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/clients/{{client_id}}/services/{{service_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"clients",
+								"{{client_id}}",
+								"services",
+								"{{service_id}}"
+							]
+						},
+						"description": "Add an additional service to a client"
+					},
+					"response": []
+				},
+				{
+					"name": "Assign Locker to Client",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/clients/{{client_id}}/locker/{{locker_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"clients",
+								"{{client_id}}",
+								"locker",
+								"{{locker_id}}"
+							]
+						},
+						"description": "Assign a locker to a client"
+					},
+					"response": []
+				}
+			],
+			"description": "APIs for managing fitness center clients"
+		},
+		{
+			"name": "Trainer Management",
+			"item": [
+				{
+					"name": "Create Trainer",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"surname\": \"Петров\",\n    \"name\": \"Петр\",\n    \"patronymic\": \"Петрович\",\n    \"phone\": \"+79123456790\",\n    \"status\": \"WORKING\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/trainers",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"trainers"
+							]
+						},
+						"description": "Create a new trainer in the fitness center system"
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Trainers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/trainers",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"trainers"
+							]
+						},
+						"description": "Retrieve a list of all trainers"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Trainer Details",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/trainers/{{trainer_id}}/detail",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"trainers",
+								"{{trainer_id}}",
+								"detail"
+							]
+						},
+						"description": "Get detailed trainer information including related data"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Trainer",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"surname\": \"Петров\",\n    \"name\": \"Петр\",\n    \"patronymic\": \"Петрович\",\n    \"phone\": \"+79123456790\",\n    \"status\": \"WORKING\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/trainers/{{trainer_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"trainers",
+								"{{trainer_id}}"
+							]
+						},
+						"description": "Update existing trainer information"
+					},
+					"response": []
+				},
+				{
+					"name": "Change Trainer Status",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/trainers/{{trainer_id}}/status?status=ON_LEAVE",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"trainers",
+								"{{trainer_id}}",
+								"status"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "ON_LEAVE"
+								}
+							]
+						},
+						"description": "Change trainer status (WORKING, ON_LEAVE, NOT_WORKING)"
+					},
+					"response": []
+				}
+			],
+			"description": "APIs for managing fitness center trainers"
+		},
+		{
+			"name": "Locker Management",
+			"item": [
+				{
+					"name": "Get All Lockers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/lockers",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"lockers"
+							]
+						},
+						"description": "Get all lockers with client information"
+					},
+					"response": []
+				}
+			],
+			"description": "APIs for managing fitness center lockers"
+		},
+		{
+			"name": "Service Management",
+			"item": [
+				{
+					"name": "Get All Services",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/services",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"services"
+							]
+						},
+						"description": "Get all available additional services"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Service by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/services/{{service_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"services",
+								"{{service_id}}"
+							]
+						},
+						"description": "Get a specific service with client information"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Pool Service",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/services/{{pool_service_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"services",
+								"{{pool_service_id}}"
+							]
+						},
+						"description": "Get pool service with client information"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Sauna Service",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/services/{{sauna_service_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"services",
+								"{{sauna_service_id}}"
+							]
+						},
+						"description": "Get sauna service with client information"
+					},
+					"response": []
+				}
+			],
+			"description": "APIs for managing additional services"
+		},
+		{
+			"name": "Sample Data Setup",
+			"item": [
+				{
+					"name": "Create Sample Client",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"surname\": \"Сидоров\",\n    \"name\": \"Алексей\",\n    \"patronymic\": \"Владимирович\",\n    \"birthday\": \"1985-03-20\",\n    \"phone\": \"+79123456791\",\n    \"email\": \"alexey.sidorov@example.com\",\n    \"isActive\": true\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/clients",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"clients"
+							]
+						},
+						"description": "Create a sample client for testing"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Sample Trainer",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"surname\": \"Козлов\",\n    \"name\": \"Михаил\",\n    \"patronymic\": \"Сергеевич\",\n    \"phone\": \"+79123456792\",\n    \"status\": \"WORKING\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/trainers",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"trainers"
+							]
+						},
+						"description": "Create a sample trainer for testing"
+					},
+					"response": []
+				}
+			],
+			"description": "Sample requests to set up test data"
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8090/api",
+			"type": "string"
+		},
+		{
+			"key": "client_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "trainer_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "locker_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "service_id",
+			"value": "SOLARIUM",
+			"type": "string"
+		},
+		{
+			"key": "trainer_status_working",
+			"value": "WORKING",
+			"type": "string"
+		},
+		{
+			"key": "trainer_status_on_leave",
+			"value": "ON_LEAVE",
+			"type": "string"
+		},
+		{
+			"key": "trainer_status_not_working",
+			"value": "NOT_WORKING",
+			"type": "string"
+		}
+	]
+}
