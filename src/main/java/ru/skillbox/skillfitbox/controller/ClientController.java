@@ -9,7 +9,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,16 +21,12 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/clients")
+@RequestMapping("/api/clients")
 @Tag(name = "Управление клиентами", description = "API для управления клиентами фитнес-центра")
+@RequiredArgsConstructor
 public class ClientController {
 
     private final ClientService clientService;
-
-    @Autowired
-    public ClientController(ClientService clientService) {
-        this.clientService = clientService;
-    }
 
     @Operation(summary = "Создать нового клиента", description = "Добавить нового клиента в систему фитнес-центра")
     @ApiResponses(value = {

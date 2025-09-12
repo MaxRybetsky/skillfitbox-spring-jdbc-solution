@@ -60,13 +60,16 @@ public class ClientService {
      * @return обновленный DTO клиента
      */
     public ClientDto updateClient(UUID id, ClientDto clientDto) {
-        Client existingClient = clientRepository.findById(id);
+        Client existingClient = clientRepository.findClientDetailById(id);
         if (existingClient == null) {
             throw new RuntimeException("Клиент с ID " + id + " не найден");
         }
         
         clientDto.setId(id);
         Client client = clientMapper.toEntity(clientDto);
+        client.setServices(existingClient.getServices());
+        client.setLocker(existingClient.getLocker());
+        client.setTrainer(existingClient.getTrainer());
         client.setCreatedDatetime(existingClient.getCreatedDatetime());
         Client updatedClient = clientRepository.update(client);
         return clientMapper.toDto(updatedClient);
@@ -148,7 +151,7 @@ public class ClientService {
      * @param isActive новый статус активности
      */
     public void updateClientStatus(UUID id, Boolean isActive) {
-        Client client = clientRepository.findById(id);
+        Client client = clientRepository.findClientDetailById(id);
         if (client == null) {
             throw new RuntimeException("Клиент с ID " + id + " не найден");
         }

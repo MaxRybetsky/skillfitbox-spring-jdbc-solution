@@ -263,6 +263,25 @@
 					"response": []
 				},
 				{
+					"name": "Get Trainer by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/trainers/{{trainer_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"trainers",
+								"{{trainer_id}}"
+							]
+						},
+						"description": "Get a specific trainer by their ID"
+					},
+					"response": []
+				},
+				{
 					"name": "Get Trainer Details",
 					"request": {
 						"method": "GET",
@@ -400,6 +419,63 @@
 							]
 						},
 						"description": "Get a specific service with client information"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Solarium Service",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/services/SOLARIUM",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"services",
+								"SOLARIUM"
+							]
+						},
+						"description": "Get solarium service with client information"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Cryosauna Service",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/services/CRYOSAUNA",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"services",
+								"CRYOSAUNA"
+							]
+						},
+						"description": "Get cryosauna service with client information"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Crossfit Service",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/services/CROSSFIT",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"services",
+								"CROSSFIT"
+							]
+						},
+						"description": "Get crossfit service with client information"
 					},
 					"response": []
 				},
@@ -564,6 +640,31 @@
 		{
 			"key": "trainer_status_not_working",
 			"value": "NOT_WORKING",
+			"type": "string"
+		},
+		{
+			"key": "pool_service_id",
+			"value": "POOL",
+			"type": "string"
+		},
+		{
+			"key": "sauna_service_id",
+			"value": "SAUNA",
+			"type": "string"
+		},
+		{
+			"key": "solarium_service_id",
+			"value": "SOLARIUM",
+			"type": "string"
+		},
+		{
+			"key": "cryosauna_service_id",
+			"value": "CRYOSAUNA",
+			"type": "string"
+		},
+		{
+			"key": "crossfit_service_id",
+			"value": "CROSSFIT",
 			"type": "string"
 		}
 	]

@@ -8,7 +8,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.skillbox.skillfitbox.dto.ServiceDto;
@@ -17,16 +17,12 @@ import ru.skillbox.skillfitbox.service.AdditionalServicesHandlingService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/services")
+@RequestMapping("/api/services")
 @Tag(name = "Управление услугами", description = "API для управления дополнительными услугами")
+@RequiredArgsConstructor
 public class ServiceController {
 
     private final AdditionalServicesHandlingService additionalServicesHandlingService;
-
-    @Autowired
-    public ServiceController(AdditionalServicesHandlingService additionalServicesHandlingService) {
-        this.additionalServicesHandlingService = additionalServicesHandlingService;
-    }
 
     @Operation(summary = "Получить все услуги", description = "Получить список всех доступных дополнительных услуг")
     @ApiResponse(responseCode = "200", description = "Список услуг успешно получен",

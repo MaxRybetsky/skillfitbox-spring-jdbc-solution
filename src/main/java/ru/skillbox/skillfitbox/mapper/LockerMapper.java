@@ -19,7 +19,7 @@ public interface LockerMapper {
         Client client = locker.getClient();
 
         if (client == null) {
-            return "";
+            return null;
         }
 
         return String.join(" ", client.getSurname(), client.getName(), client.getPatronymic());

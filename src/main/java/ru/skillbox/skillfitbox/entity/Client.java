@@ -1,7 +1,6 @@
 package ru.skillbox.skillfitbox.entity;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -27,7 +26,7 @@ public class Client {
     private LocalDateTime createdDatetime;
     private LocalDateTime updatedDatetime;
 
-    public Trainer trainer;
-    public Locker locker;
-    public List<AdditionalService> services;
+    private Trainer trainer;
+    private Locker locker;
+    private List<AdditionalService> services;
 }

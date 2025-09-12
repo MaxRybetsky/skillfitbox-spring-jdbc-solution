@@ -21,14 +21,19 @@ public class AdditionalServicesHandlingService {
     private final ServiceMapper serviceMapper;
 
     /**
-     * Получает список всех услуг.
+     * Получает список всех услуг с именами клиентов.
      * 
-     * @return список DTO услуг
+     * @return список DTO услуг с именами клиентов
      */
     public List<ServiceDto> getAllServices() {
         List<AdditionalService> additionalServices = additionalServiceRepository.findAll();
         return additionalServices.stream()
-                .map(serviceMapper::toDto)
+                .map(service -> {
+                    ServiceDto serviceDto = serviceMapper.toDto(service);
+                    List<String> clientNames = additionalServiceRepository.findClientNamesByServiceId(serviceDto.getId());
+                    serviceDto.setClientNames(clientNames);
+                    return serviceDto;
+                })
                 .collect(Collectors.toList());
     }
 

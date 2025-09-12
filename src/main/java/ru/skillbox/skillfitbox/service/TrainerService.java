@@ -74,6 +74,20 @@ public class TrainerService {
     }
 
     /**
+     * Получает тренера по ID.
+     * 
+     * @param id ID тренера
+     * @return DTO тренера или null если не найден
+     */
+    public TrainerDto getTrainerById(UUID id) {
+        Trainer trainer = trainerRepository.findById(id);
+        if (trainer == null) {
+            return null;
+        }
+        return trainerMapper.toDto(trainer);
+    }
+
+    /**
      * Получает полную информацию о тренере включая имена клиентов.
      * 
      * @param id ID тренера

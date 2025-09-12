@@ -22,8 +22,8 @@ public class OpenApiConfig {
                         .version("1.0.0")
                         .contact(new Contact()
                                 .name("SkillFitBox Team")
-                                .email("support@skillfitbox.com")
-                                .url("https://skillfitbox.com"))
+                                .email("support@skillbox.ru")
+                                .url("https://skillbox.ru"))
                         .license(new License()
                                 .name("MIT License")
                                 .url("https://opensource.org/licenses/MIT")))
@@ -32,7 +32,7 @@ public class OpenApiConfig {
                                 .url("http://localhost:8090/api")
                                 .description("Development server"),
                         new Server()
-                                .url("https://api.skillfitbox.com")
+                                .url("https://api.skillbox.ru")
                                 .description("Production server")
                 ));
     }

@@ -27,10 +27,10 @@ public class LockerRepository {
 
     private Locker mapLocker(ResultSet rs) throws SQLException {
         Locker locker = new Locker();
-        locker.setId(rs.getObject("l_locker_id", UUID.class));
-        locker.setNumber(rs.getInt("l_locker_number"));
-        locker.setCreatedDatetime(rs.getObject("l_locker_created_datetime", LocalDateTime.class));
-        locker.setUpdatedDatetime(rs.getObject("l_locker_updated_datetime", LocalDateTime.class));
+        locker.setId(rs.getObject("l_id", UUID.class));
+        locker.setNumber(rs.getInt("l_number"));
+        locker.setCreatedDatetime(rs.getObject("l_created_datetime", LocalDateTime.class));
+        locker.setUpdatedDatetime(rs.getObject("l_updated_datetime", LocalDateTime.class));
         return locker;
     }
 
@@ -53,7 +53,7 @@ public class LockerRepository {
         Locker locker = mapLocker(rs);
         Client client = mapClient(rs);
 
-        if (client.getId() == null) {
+        if (client.getId() != null) {
             locker.setClient(client);
         }
         return locker;
@@ -62,10 +62,10 @@ public class LockerRepository {
     public Locker findById(UUID id) {
         String sql = """
                 SELECT c.*,
-                    l.id as l_locker_id,
-                    l.number as l_locker_number,
-                    l.created_datetime as l_locker_created_datetime,
-                    l.updated_datetime as l_locker_updated_datetime
+                    l.id as l_id,
+                    l.number as l_number,
+                    l.created_datetime as l_created_datetime,
+                    l.updated_datetime as l_updated_datetime
                 FROM lockers l LEFT JOIN clients c ON l.client_id = c.id WHERE l.id = ?
                 """;
         try (Connection conn = dataSource.getConnection();
@@ -86,10 +86,10 @@ public class LockerRepository {
     public List<Locker> findAllWithClientInfo() {
         String sql = """
                 SELECT c.*,
-                    l.id as locker_id,
-                    l.number as locker_number,
-                    l.created_datetime as locker_created_datetime,
-                    l.updated_datetime as locker_updated_datetime
+                    l.id as l_id,
+                    l.number as l_number,
+                    l.created_datetime as l_created_datetime,
+                    l.updated_datetime as l_updated_datetime
                 FROM lockers l LEFT JOIN clients c ON l.client_id = c.id ORDER BY l.number
                 """;
         List<Locker> result = new ArrayList<>();

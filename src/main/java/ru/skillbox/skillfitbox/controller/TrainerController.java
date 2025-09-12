@@ -9,7 +9,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,16 +22,12 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/trainers")
+@RequestMapping("/api/trainers")
 @Tag(name = "Управление тренерами", description = "API для управления тренерами фитнес-центра")
+@RequiredArgsConstructor
 public class TrainerController {
 
     private final TrainerService trainerService;
-
-    @Autowired
-    public TrainerController(TrainerService trainerService) {
-        this.trainerService = trainerService;
-    }
 
     @Operation(summary = "Создать нового тренера", description = "Добавить нового тренера в систему фитнес-центра")
     @ApiResponses(value = {
@@ -40,7 +36,6 @@ public class TrainerController {
                             schema = @Schema(implementation = TrainerDto.class),
                             examples = @ExampleObject(value = """
                                     {
-                                        "id": "123e4567-e89b-12d3-a456-426614174001",
                                         "surname": "Петров",
                                         "name": "Петр",
                                         "patronymic": "Петрович",
@@ -55,8 +50,12 @@ public class TrainerController {
     public ResponseEntity<TrainerDto> addTrainer(
             @Parameter(description = "Информация о тренере", required = true)
             @Valid @RequestBody TrainerDto trainerDto) {
-        TrainerDto createdTrainer = trainerService.addTrainer(trainerDto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdTrainer);
+        try {
+            TrainerDto createdTrainer = trainerService.addTrainer(trainerDto);
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdTrainer);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
     }
 
     @Operation(summary = "Обновить информацию о тренере", description = "Обновить существующую информацию о тренере по ID")
@@ -82,11 +81,17 @@ public class TrainerController {
     @PutMapping("/{id}")
     public ResponseEntity<TrainerDto> updateTrainer(
             @Parameter(description = "ID тренера", required = true)
-            @PathVariable UUID id,
+            @PathVariable UUID id, 
             @Parameter(description = "Обновленная информация о тренере", required = true)
             @Valid @RequestBody TrainerDto trainerDto) {
-        TrainerDto updatedTrainer = trainerService.updateTrainer(id, trainerDto);
-        return ResponseEntity.ok(updatedTrainer);
+        try {
+            TrainerDto updatedTrainer = trainerService.updateTrainer(id, trainerDto);
+            return ResponseEntity.ok(updatedTrainer);
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
     }
 
     @Operation(summary = "Изменить статус тренера", description = "Изменить статус тренера (WORKING, ON_LEAVE, NOT_WORKING)")
@@ -97,11 +102,15 @@ public class TrainerController {
     @PatchMapping("/{id}/status")
     public ResponseEntity<Void> changeTrainerStatus(
             @Parameter(description = "ID тренера", required = true)
-            @PathVariable UUID id,
+            @PathVariable UUID id, 
             @Parameter(description = "Новый статус тренера", required = true)
             @RequestParam TrainerStatus status) {
-        trainerService.changeTrainerStatus(id, status);
-        return ResponseEntity.ok().build();
+        try {
+            trainerService.changeTrainerStatus(id, status);
+            return ResponseEntity.ok().build();
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @Operation(summary = "Получить детальную информацию о тренере", description = "Получить детальную информацию о тренере, включая связанные данные")

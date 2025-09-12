@@ -92,7 +92,7 @@ API SkillFitBox предоставляет эндпоинты для управ�
 
 1. **Создание клиента**:
    ```
-   POST /clients
+   POST /api/clients
    {
      "surname": "Иванов",
      "name": "Иван",
@@ -106,7 +106,7 @@ API SkillFitBox предоставляет эндпоинты для управ�
 
 2. **Создание тренера**:
    ```
-   POST /trainers
+   POST /api/trainers
    {
      "surname": "Петров",
      "name": "Петр",
@@ -118,17 +118,17 @@ API SkillFitBox предоставляет эндпоинты для управ�
 
 3. **Назначение тренера клиенту**:
    ```
-   POST /clients/{client_id}/trainer/{trainer_id}
+   POST /api/clients/{client_id}/trainer/{trainer_id}
    ```
 
 4. **Добавление услуги клиенту**:
    ```
-   POST /clients/{client_id}/services/SOLARIUM
+   POST /api/clients/{client_id}/services/SOLARIUM
    ```
 
 5. **Назначение шкафчика клиенту**:
    ```
-   POST /clients/{client_id}/locker/{locker_id}
+   POST /api/clients/{client_id}/locker/{locker_id}
    ```
 
 ## Сводка эндпоинтов API

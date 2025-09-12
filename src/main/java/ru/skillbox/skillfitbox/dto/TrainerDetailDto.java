@@ -1,11 +1,9 @@
 package ru.skillbox.skillfitbox.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import ru.skillbox.skillfitbox.entity.TrainerStatus;
 
 import java.util.List;
 import java.util.UUID;
