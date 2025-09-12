@@ -22,6 +22,7 @@
                         <div class="col-md-6">
                             <p><strong>ID:</strong> <code>${service.id}</code></p>
                             <p><strong>Название:</strong> ${service.name}</p>
+                            <p><strong>Цена:</strong> ${service.price!0}₽</p>
                         </div>
                         <div class="col-md-6">
                             <p><strong>Количество клиентов:</strong> ${service.clientNames?size}</p>

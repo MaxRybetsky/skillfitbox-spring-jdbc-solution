@@ -16,7 +16,10 @@
                                 <i class="fas fa-concierge-bell me-2"></i>${service.name}
                             </h5>
                             <p class="card-text">
-                                <small class="text-muted">ID: ${service.id}</small>
+                                <small class="text-muted">ID: ${service.id}</small><br>
+                                <strong class="text-success">
+                                    Цена: ${service.price!0}₽
+                                </strong>
                             </p>
                             <#if service.clientNames?has_content>
                                 <h6>Клиенты:</h6>

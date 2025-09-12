@@ -25,6 +25,7 @@ public class JdbcTemplateAdditionalServiceRepository implements AdditionalServic
         AdditionalService service = new AdditionalService();
         service.setId(rs.getString("id"));
         service.setName(rs.getString("name"));
+        service.setPrice(rs.getInt("price"));
         service.setCreatedDatetime(rs.getObject("created_datetime", LocalDateTime.class));
         service.setUpdatedDatetime(rs.getObject("updated_datetime", LocalDateTime.class));
         return service;
