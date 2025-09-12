@@ -108,17 +108,4 @@ public class TrainerRepository {
         }
         return result;
     }
-
-    public void updateStatus(UUID id, TrainerStatus status) {
-        String sql = "UPDATE trainers SET status = ?, updated_datetime = ? WHERE id = ?";
-        try (Connection conn = dataSource.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, status.name());
-            ps.setObject(2, LocalDateTime.now());
-            ps.setObject(3, id);
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException("Ошибка обновления статуса тренера", e);
-        }
-    }
 }
