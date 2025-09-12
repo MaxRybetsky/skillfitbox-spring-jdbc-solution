@@ -2,6 +2,7 @@ package ru.skillbox.skillfitbox.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.skillbox.skillfitbox.dto.ServiceDto;
 import ru.skillbox.skillfitbox.entity.AdditionalService;
 import ru.skillbox.skillfitbox.mapper.ServiceMapper;
@@ -25,6 +26,7 @@ public class AdditionalServicesHandlingService {
      * 
      * @return список DTO услуг с именами клиентов
      */
+    @Transactional(readOnly = true)
     public List<ServiceDto> getAllServices() {
         List<AdditionalService> additionalServices = additionalServiceRepository.findAll();
         return additionalServices.stream()
@@ -43,6 +45,7 @@ public class AdditionalServicesHandlingService {
      * @param id ID услуги
      * @return DTO услуги с именами клиентов или null если не найдена
      */
+    @Transactional(readOnly = true)
     public ServiceDto getServiceByIdWithClients(String id) {
         AdditionalService additionalService = additionalServiceRepository.findById(id);
         if (additionalService == null) {

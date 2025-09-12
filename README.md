@@ -14,13 +14,14 @@ SkillFitBox - это Spring Boot приложение, демонстрирую�
 - **Spring Boot 3.2.0**
 - **Java 17**
 - **PostgreSQL** (без индексов)
-- **JDBC** с кастомным DataSource bean и HikariCP
+- **Spring JDBC Template** с HikariCP connection pool
 - **Flyway** для миграций базы данных
 - **Maven** для сборки
 - **MapStruct** для маппинга объектов
 - **Lombok** для сокращения boilerplate кода
 - **SLF4J + Logback** для логирования
 - **Jakarta Validation** для валидации входных данных
+- **Spring MVC** с FreeMarker для веб-интерфейса
 
 ## Архитектура
 
@@ -30,9 +31,12 @@ SkillFitBox - это Spring Boot приложение, демонстрирую�
 ├── entity/          # Сущности базы данных
 ├── dto/             # Data Transfer Objects
 ├── mapper/          # MapStruct мапперы
-├── repository/      # Слой доступа к данным (JDBC)
-├── additionalService/         # Бизнес-логика
+├── repository/      # Интерфейсы репозиториев
+│   ├── impl/        # Spring JDBC Template реализации
+│   └── legacy/      # Legacy JDBC реализации
+├── service/         # Бизнес-логика
 ├── controller/      # REST контроллеры
+├── ui/              # Веб-интерфейс контроллеры
 └── config/          # Конфигурация приложения
 ```
 
@@ -100,13 +104,17 @@ cd skillfitbox
 CREATE DATABASE skillfitbox;
 ```
 
-### 3. Настройка переменных окружения
+### 3. Настройка подключения к базе данных
 
-Создайте файл `.env` или установите переменные окружения:
+Настройте подключение к базе данных в файле `src/main/resources/application.yml`:
 
-```bash
-export DB_USERNAME=postgres
-export DB_PASSWORD=your_password
+```yaml
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5434/postgres
+    username: postgres
+    password: your_password
+    driver-class-name: org.postgresql.Driver
 ```
 
 ### 4. Сборка и запуск
@@ -134,6 +142,8 @@ java -jar target/skillfitbox-1.0.0.jar
 Приложение будет доступно по адресу: `http://localhost:8090/api`
 
 UI приложения доступен из браузера по адресу `http://localhost:8090/`
+
+Swagger UI документация доступна по адресу: `http://localhost:8090/api/swagger-ui.html`
 
 ## API Endpoints
 
@@ -205,10 +215,54 @@ curl http://localhost:8080/api/clients/{client-id}/detail
 
 ## Особенности реализации
 
-1. **JDBC с HikariCP** - используется нативный JDBC с пулом соединений HikariCP
-2. **MapStruct** - автоматическая генерация мапперов между сущностями и DTO
-3. **Lombok** - автоматическая генерация геттеров, сеттеров, конструкторов
-4. **Flyway** - автоматическое выполнение миграций при запуске
-5. **Валидация** - Jakarta Validation для проверки входных данных
-6. **Транзакции** - Spring транзакции для обеспечения целостности данных
-7. **JOIN запросы** - оптимизированные запросы с использованием LEFT JOIN
+1. **Spring JDBC Template** - используется Spring JDBC Template с HikariCP connection pool для упрощения работы с базой данных
+2. **Repository Pattern** - интерфейсы репозиториев с реализациями в пакете `impl/`
+3. **Transaction Management** - декларативное управление транзакциями с помощью `@Transactional`
+4. **Comprehensive Logging** - подробное логирование всех операций с базой данных
+5. **MapStruct** - автоматическая генерация мапперов между сущностями и DTO
+6. **Lombok** - автоматическая генерация геттеров, сеттеров, конструкторов
+7. **Flyway** - автоматическое выполнение миграций при запуске
+8. **Валидация** - Jakarta Validation для проверки входных данных
+9. **JOIN запросы** - оптимизированные запросы с использованием LEFT JOIN
+10. **Web UI** - полнофункциональный веб-интерфейс на Spring MVC + FreeMarker
+
+## Миграция на Spring JDBC Template
+
+Проект был мигрирован с нативного JDBC на Spring JDBC Template для улучшения:
+
+### Преимущества миграции:
+
+- **Упрощение кода** - Spring JDBC Template автоматически управляет ресурсами (Connection, PreparedStatement, ResultSet)
+- **Автоматическая обработка исключений** - Spring автоматически преобразует SQLException в более понятные исключения
+- **Управление транзакциями** - декларативное управление транзакциями через `@Transactional`
+- **Лучшая производительность** - оптимизированная работа с пулом соединений
+- **Comprehensive Logging** - подробное логирование всех операций для отладки
+
+### Структура репозиториев:
+
+```
+repository/
+├── ClientRepository.java                    # Интерфейс
+├── TrainerRepository.java                   # Интерфейс
+├── LockerRepository.java                    # Интерфейс
+├── AdditionalServiceRepository.java         # Интерфейс
+├── impl/                                    # Spring JDBC Template реализации
+│   ├── JdbcTemplateClientRepository.java
+│   ├── JdbcTemplateTrainerRepository.java
+│   ├── JdbcTemplateLockerRepository.java
+│   └── JdbcTemplateAdditionalServiceRepository.java
+└── legacy/                                  # Legacy JDBC реализации (сохранены для справки)
+    ├── LegacyClientRepository.java
+    ├── LegacyTrainerRepository.java
+    ├── LegacyLockerRepository.java
+    └── LegacyAdditionalServiceRepository.java
+```
+
+### Ключевые изменения:
+
+1. **Интерфейсы репозиториев** - выделены в отдельные интерфейсы для лучшей архитектуры
+2. **Spring JDBC Template** - заменил нативный JDBC код
+3. **Row Mappers** - функциональные интерфейсы для маппинга ResultSet в объекты
+4. **Transaction Management** - добавлены `@Transactional` аннотации в сервисном слое
+5. **Logging** - добавлено подробное логирование всех операций
+6. **Configuration** - база данных настроена через `application.yml`

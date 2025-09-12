@@ -2,6 +2,7 @@ package ru.skillbox.skillfitbox.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.skillbox.skillfitbox.dto.LockerDto;
 import ru.skillbox.skillfitbox.mapper.LockerMapper;
 import ru.skillbox.skillfitbox.repository.LockerRepository;
@@ -23,6 +24,7 @@ public class LockerService {
      * 
      * @return список DTO шкафчиков с информацией о клиентах
      */
+    @Transactional(readOnly = true)
     public List<LockerDto> getAllLockersWithClientInfo() {
         return lockerRepository.findAllWithClientInfo().stream()
                 .map(lockerMapper::toDto)
