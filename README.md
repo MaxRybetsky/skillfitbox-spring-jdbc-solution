@@ -131,7 +131,9 @@ java -jar target/skillfitbox-1.0.0.jar
 
 ### 5. Проверка работы
 
-Приложение будет доступно по адресу: `http://localhost:8080/api`
+Приложение будет доступно по адресу: `http://localhost:8090/api`
+
+UI приложения доступен из браузера по адресу `http://localhost:8090/`
 
 ## API Endpoints
 
@@ -201,14 +203,6 @@ curl -X POST http://localhost:8080/api/trainers \
 curl http://localhost:8080/api/clients/{client-id}/detail
 ```
 
-## Логирование
-
-Логи приложения сохраняются в файл `logs/skillfitbox.log` и выводятся в консоль.
-
-Уровни логирования:
-- `DEBUG` - для пакетов `com.skillfitbox` и `org.springframework.jdbc`
-- `INFO` - для остальных компонентов
-
 ## Особенности реализации
 
 1. **JDBC с HikariCP** - используется нативный JDBC с пулом соединений HikariCP
@@ -218,76 +212,3 @@ curl http://localhost:8080/api/clients/{client-id}/detail
 5. **Валидация** - Jakarta Validation для проверки входных данных
 6. **Транзакции** - Spring транзакции для обеспечения целостности данных
 7. **JOIN запросы** - оптимизированные запросы с использованием LEFT JOIN
-
-## Структура проекта
-
-```
-src/
-├── main/
-│   ├── java/ru/skillbox/skillfitbox/
-│   │   ├── SkillFitBoxApplication.java
-│   │   ├── config/
-│   │   │   └── DatabaseConfig.java
-│   │   ├── controller/
-│   │   │   ├── ClientController.java
-│   │   │   ├── TrainerController.java
-│   │   │   ├── LockerController.java
-│   │   │   └── ServiceController.java
-│   │   ├── dto/
-│   │   │   ├── ClientDto.java
-│   │   │   ├── ClientDetailDto.java
-│   │   │   ├── TrainerDto.java
-│   │   │   ├── TrainerDetailDto.java
-│   │   │   ├── LockerDto.java
-│   │   │   └── ServiceDto.java
-│   │   ├── entity/
-│   │   │   ├── Client.java
-│   │   │   ├── Trainer.java
-│   │   │   ├── TrainerStatus.java
-│   │   │   ├── Locker.java
-│   │   │   └── Service.java
-│   │   ├── mapper/
-│   │   │   ├── ClientMapper.java
-│   │   │   ├── TrainerMapper.java
-│   │   │   ├── LockerMapper.java
-│   │   │   └── ServiceMapper.java
-│   │   ├── repository/
-│   │   │   ├── ClientRepository.java
-│   │   │   ├── TrainerRepository.java
-│   │   │   ├── LockerRepository.java
-│   │   │   └── ServiceRepository.java
-│   │   └── additionalService/
-│   │       ├── ClientService.java
-│   │       ├── TrainerService.java
-│   │       ├── LockerService.java
-│   │       └── ServiceService.java
-│   └── resources/
-│       ├── application.yml
-│       └── db/migration/
-│           ├── V1__Create_tables.sql
-│           └── V2__Insert_initial_data.sql
-└── test/
-```
-
-## Разработка
-
-### Добавление новых функций
-
-1. Создайте сущность в пакете `entity`
-2. Создайте DTO в пакете `dto`
-3. Создайте маппер в пакете `mapper`
-4. Создайте репозиторий в пакете `repository`
-5. Создайте сервис в пакете `additionalService`
-6. Создайте контроллер в пакете `controller`
-7. Добавьте миграцию в `resources/db/migration`
-
-### Тестирование
-
-Для тестирования API можно использовать:
-- **curl** (примеры выше)
-- **Postman**
-- **Swagger UI** (если добавить зависимость)
-
-## Лицензия
-
-Этот проект создан в образовательных целях для демонстрации работы с базами данных в Spring Boot приложениях.
