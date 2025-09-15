@@ -18,7 +18,7 @@ public class OpenApiConfig {
         return new OpenAPI()
                 .info(new Info()
                         .title("SkillFitBox API")
-                        .description("Fitness center management system API for managing clients, trainers, lockers, and services")
+                        .description("Приложение представляет собой систему управления фитнес-центром с возможностью управления клиентами, тренерами, шкафчиками и дополнительными услугами.")
                         .version("1.0.0")
                         .contact(new Contact()
                                 .name("SkillFitBox Team")
@@ -29,7 +29,7 @@ public class OpenApiConfig {
                                 .url("https://opensource.org/licenses/MIT")))
                 .servers(List.of(
                         new Server()
-                                .url("http://localhost:8090/api")
+                                .url("http://localhost:8090/")
                                 .description("Development server"),
                         new Server()
                                 .url("https://api.skillbox.ru")
